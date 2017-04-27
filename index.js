@@ -15,7 +15,7 @@ module.exports = Object.assign(function (init) {
       for (var i = 1; i < arguments.length; i++) {
         params.push(arguments[i])
       }
-      next = dotProp[name].apply(undefined, params)
+      next = dotProp[name].apply(dotProp, params)
       return methods
     }.bind(undefined, name)
   }

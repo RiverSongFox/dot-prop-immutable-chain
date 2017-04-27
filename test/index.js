@@ -1,31 +1,104 @@
 var assert = require('assert')
 var dotProp = require('dot-prop-immutable')
-var dotPropWrapper = require('../index')
+var dotPropChain = require('../index')
 
-describe('wrapper', function () {
+describe('dot-prop-immutable-chain', function () {
 
-  it('should reflect dotPropImmutable', function () {
-    for (var method in dotProp) {
-      if (dotProp.hasOwnProperty(method)) {
-        assert.strictEqual(dotPropWrapper[method], dotProp[method],
-          'method ' + method + ' doesn\'t strictly match dot-prop-immutable\'s ones')
-      }
-    }
+  describe('individual methods', function () {
+
+    it('gets', function () {
+      assert.strictEqual(
+        dotPropChain({foo: {bar: 'baz'}})
+          .get('foo.bar')
+          .value(),
+        'baz'
+      )
+    })
+
+    it('sets', function () {
+      assert.deepStrictEqual(dotPropChain({
+          foo: {
+            bar: 'baz'
+          }
+        })
+          .set('foo.bar', 'meow')
+          .value(),
+        {
+          foo: {
+            bar: 'meow'
+          }
+        }
+      )
+    })
+
+    it('deletes', function () {
+      assert.deepStrictEqual(dotPropChain({
+          foo: {
+            bar: 'baz',
+            baz: 'meow'
+          }
+        })
+          .delete('foo.bar')
+          .value(),
+        {
+          foo: {
+            baz: 'meow'
+          }
+        }
+      )
+    })
+
+    it('toggles', function () {
+      assert.strictEqual(dotPropChain({foo: false})
+          .toggle('foo')
+          .value().foo,
+        true
+      )
+    })
+
+    it('merges', function () {
+      assert.deepStrictEqual(dotPropChain({
+          foo: {
+            bar: ['baz']
+          }
+        })
+          .merge('foo.bar', ['meow'])
+          .value(),
+        {
+          foo: {
+            bar: ['baz', 'meow']
+          }
+        }
+      )
+    })
+
   })
 
-  it('should allow chaining methods of dot-prop-immutable', function () {
-    var changed = dotPropWrapper({
-      foo: {}
-    })
-      .set('foo.bar', 'hello')
-      .set('foo.baz', 'world')
-      .value()
-    assert.deepStrictEqual(changed, {
-      foo: {
-        bar: 'hello',
-        baz: 'world'
+  describe('integration features', function () {
+
+    it('reflects methods of dot-prop-immutable', function () {
+      for (var method in dotProp) {
+        if (dotProp.hasOwnProperty(method)) {
+          assert.strictEqual(dotPropChain[method], dotProp[method],
+            'method ' + method + ' doesn\'t strictly match dot-prop-immutable\'s ones')
+        }
       }
     })
+
+    it('allows chaining methods', function () {
+      var state = {}
+      state = dotPropChain(state)
+        .set('foo.bar', 'hello')
+        .set('foo.baz', 'world')
+        .value()
+      assert.deepStrictEqual(state, {
+        foo: {
+          bar: 'hello',
+          baz: 'world'
+        }
+      })
+    })
+
   })
 
 })
