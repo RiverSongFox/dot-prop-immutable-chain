@@ -1,6 +1,6 @@
 {
   "name": "dot-prop-immutable-chain",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Allows chaining methods of dot-prop-immutable library",
   "homepage": "",
   "bugs": {
