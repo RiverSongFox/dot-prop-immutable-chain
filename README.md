@@ -1,5 +1,7 @@
 # dot-prop-immutable-chain 
-![Travis CI](https://travis-ci.org/yaruson/dot-prop-immutable-chain.svg)
+[![Travis CI](https://travis-ci.org/yaruson/dot-prop-immutable-chain.svg)](https://travis-ci.org/yaruson/dot-prop-immutable-chain)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/yaruson/dot-prop-immutable-chain/master/LICENSE)
+[![Twitter](https://img.shields.io/twitter/url/https/github.com/yaruson/dot-prop-immutable-chain.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=%5Bobject%20Object%5D)
 
 This module allows you to chain methods of the [dot-prop-immutable](https://github.com/debitoor/dot-prop-immutable) library.
 
